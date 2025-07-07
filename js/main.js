@@ -3,7 +3,7 @@ const storyData = [
         title: '1. 옥상의 성찰',
         score: 2,
         icon: '🏙️',
-        imageUrl: 'images/01.png',
+        imageUrl: 'https://github.com/greenkey20/book-magnifying-glass/blob/main/images/01%201BA65A24-E5E9-40C8-BB09-098F0378B32A.png',
         content: `어느 평일 저녁, 개발자 초록토끼는 회사 옥상에 올라가 도시의 네온사인들이 반짝이는 스카이라인을 내려다보고 있었다. 손 안의 작은 하얀 곰인형 트롬을 가만히 쓰다듬으며, 탁 트인 시야 너머로 펼쳐진 도시를 바라보았다.<br><br>"트롬아, 나는 잘 살고 있는 걸까? 이 <span class="highlight-dev">반복되는 코드</span>처럼, 내 삶도 예측 가능한 루틴 속에 갇혀버린 건 아닐까?" 초록토끼가 조용히 물었다.<br><br>이 높이에서 바라보는 도시는 아름다웠지만, 마음 한구석엔 무언가 채워지지 않는 공허함이 있었다. 매일 반복되는 코딩, 끝없는 프로젝트, 불확실한 미래에 대한 불안감들이 저녁 하늘 위로 흩어져 갔다. 마치 <span class="highlight-dev">디버깅되지 않은 오류 코드</span>처럼, 마음속 문제가 해결되지 않은 채 맴돌았다.<br><br>"내일은 조금 다른 하루가 되었으면 좋겠어. 이 <span class="highlight-dev">시스템을 리부팅하듯</span>, 새로운 변화를 맞이하고 싶어." 초록토끼가 트롬을 품에 안으며 중얼거렸다. 차가운 바람이 불어왔지만, 마음만은 새로운 변화를 갈망하고 있었다.`
             },
             {
