@@ -1,0 +1,30 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f5f5f4; 
+}
+.highlight-dev {
+    background-color: #e0f2f1;
+    color: #00796b;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+.nav-item.active {
+    background-color: #dcedc8;
+    border-left-color: #689f38;
+    transform: scale(1.02);
+}
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 300px;
+    max-height: 40vh;
+}
+@media (min-width: 768px) {
+    .chart-container {
+        height: 350px;
+    }
+}
