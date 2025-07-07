@@ -69,6 +69,8 @@ book-magnifying-glass/
 │   └── style.css       # 사용자 정의 CSS 스타일
 ├── js/                 # JavaScript 파일을 담을 폴더
 │   └── main.js         # 모든 JavaScript 로직
+├── data/               # 데이터 파일을 담을 폴더
+│   └── stories.json    # 스토리 데이터 파일
 ├── images/             # 각 챕터별 이미지 파일
 │   ├── 01.png
 │   ├── 02.png
