@@ -34,7 +34,7 @@
           class="w-full max-w-3xl bg-white p-8 rounded-xl shadow-lg text-center flex flex-col items-center justify-center"
         >
           <img
-            src="/book-magnifying-glass/images/cover1.jpeg"
+            src="/book-magnifying-glass/images/cover.png"
             alt="초록토끼와 트롬의 마음 돋보기 커버 이미지"
             class="w-full max-w-sm h-auto rounded-lg mb-6 shadow-md"
           />
@@ -44,7 +44,7 @@
           <p class="text-lg text-gray-700 mb-8 leading-relaxed">
             이 웹 애플리케이션은 초록토끼의 11가지 성장 이야기를 통해<br />
             일상 속에서 나 자신을 돌아보고, 새로운 의미를 발견하며<br />
-            궁극적으로 <span class=\"highlight-dev\">풀스택</span>으로 성장하는 여정을 제시합니다.
+            궁극적으로 '풀 스택'으로 성장하는 여정을 제시합니다.
           </p>
           <button
             id="startButton"
@@ -86,7 +86,44 @@
                 id="storyText"
                 class="text-base leading-relaxed space-y-4 text-gray-700 mb-6"
               ></div>
-              <div id="storyImageContainer"></div>
+              <div id="storyImageContainer" class="mb-6"></div>
+
+              <!-- 활동지 컨테이너 수정 -->
+              <div
+                id="activitySheetContainer"
+                class="hidden bg-gray-50 p-6 rounded-lg border border-gray-200 mt-6"
+              >
+                <h3
+                  id="activitySheetTitle"
+                  class="text-xl font-bold text-gray-700 mb-3"
+                ></h3>
+
+                <!-- 질문 컨테이너 -->
+                <div id="activityQuestionsContainer" class="space-y-4 mb-6">
+                  <!-- 질문과 입력 필드는 JS에서 동적으로 생성됩니다 -->
+                </div>
+
+                <!-- 실천해보기 섹션 -->
+                <h4 class="text-lg font-semibold text-gray-700 mb-2">
+                  실천해보기:
+                </h4>
+                <ul
+                  id="activityActionsList"
+                  class="list-disc list-inside text-gray-600 mb-4 space-y-1"
+                >
+                  <!-- 실천해보기 항목은 JS에서 동적으로 생성됩니다 -->
+                </ul>
+
+                <button
+                  id="saveActivitySheet"
+                  class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-full shadow-md transition-all duration-300 transform hover:scale-105"
+                >
+                  내용 저장하기
+                </button>
+                <p id="saveMessage" class="text-sm text-green-700 mt-2 hidden">
+                  저장되었습니다!
+                </p>
+              </div>
             </section>
 
             <section

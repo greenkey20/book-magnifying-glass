@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const coverPage = document.getElementById("coverPage");
   const mainContent = document.getElementById("mainContent");
   const navList = document.getElementById("navList");
-  const storySection = document.getElementById("story-section"); // 스토리 섹션 참조
-  const chartSection = document.getElementById("chart-section"); // 차트 섹션 참조
 
   // 스토리 데이터 불러오기
   try {
@@ -58,22 +56,28 @@ function updateDisplay(index) {
   const mainContent = document.getElementById("mainContent");
   const storySection = document.getElementById("story-section");
   const chartSection = document.getElementById("chart-section");
+  const activitySheetContainer = document.getElementById(
+    "activitySheetContainer"
+  );
 
   // '여정 소개' 페이지인 경우
   if (storyData[index].type === "cover") {
     coverPage.classList.remove("hidden"); // 제목 페이지 보여주기
     mainContent.classList.add("hidden"); // 메인 콘텐츠 숨기기
+    activitySheetContainer.classList.add("hidden"); // 활동지 숨기기 (혹시 모를 경우)
 
-    // 제목 페이지 내용 업데이트 (옵션)
-    const coverTitle = coverPage.querySelector("h2");
-    const coverText = coverPage.querySelector('p:not([class*="text-sm"])'); // 작은 텍스트 제외
-    const coverImage = coverPage.querySelector("img");
-    const startButton = coverPage.querySelector("#startButton"); // startButton 가져오기
+    // 제목 페이지 내용 업데이트
+    const coverTitleElement = coverPage.querySelector("h2");
+    const coverTextElement = coverPage.querySelector(
+      'p:not([class*="text-sm"])'
+    );
+    const coverImageElement = coverPage.querySelector("img");
+    const startButton = coverPage.querySelector("#startButton");
 
-    if (coverTitle)
-      coverTitle.textContent = storyData[index].title.split(". ")[1]; // "여정 소개"
-    if (coverText) coverText.innerHTML = storyData[index].content;
-    if (coverImage) coverImage.src = storyData[index].imageUrl;
+    if (coverTitleElement)
+      coverTitleElement.textContent = storyData[index].title.split(". ")[1];
+    if (coverTextElement) coverTextElement.innerHTML = storyData[index].content;
+    if (coverImageElement) coverImageElement.src = storyData[index].imageUrl;
 
     // '여정 시작하기' 버튼 이벤트 리스너 (제목 페이지가 활성화될 때마다 다시 연결)
     if (startButton) {
@@ -87,11 +91,19 @@ function updateDisplay(index) {
     coverPage.classList.add("hidden"); // 제목 페이지 숨기기
     mainContent.classList.remove("hidden"); // 메인 콘텐츠 보여주기
 
-    // 스토리 섹션과 차트 섹션 모두 보여주기
     storySection.classList.remove("hidden");
     chartSection.classList.remove("hidden");
 
     updateContent(index); // 스토리 콘텐츠 업데이트
+
+    // 활동지 렌더링 로직
+    if (storyData[index].activitySheet) {
+      renderActivitySheet(index);
+      activitySheetContainer.classList.remove("hidden");
+    } else {
+      activitySheetContainer.classList.add("hidden"); // 활동지 없는 챕터는 숨기기
+    }
+
     updateChartHighlight(index); // 차트 하이라이트 업데이트
   }
 
@@ -123,6 +135,79 @@ function updateContent(index) {
   }
 
   document.getElementById("storyText").innerHTML = story.content;
+}
+
+// 활동지 렌더링 및 저장 로직 함수
+function renderActivitySheet(index) {
+  const activitySheetContainer = document.getElementById(
+    "activitySheetContainer"
+  );
+  const activitySheetTitle = document.getElementById("activitySheetTitle");
+  const activityQuestionsContainer = document.getElementById(
+    "activityQuestionsContainer"
+  );
+  const activityActionsList = document.getElementById("activityActionsList");
+  const saveActivitySheetButton = document.getElementById("saveActivitySheet");
+  const saveMessage = document.getElementById("saveMessage");
+
+  const sheetData = storyData[index].activitySheet;
+
+  activitySheetTitle.textContent = sheetData.title;
+
+  // 질문 섹션 동적 생성
+  activityQuestionsContainer.innerHTML = ""; // 기존 내용 초기화
+  const savedInputs = JSON.parse(
+    localStorage.getItem(`activitySheet_chapter_${index}_inputs`) || "{}"
+  );
+
+  sheetData.questions.forEach((q, qIndex) => {
+    const questionDiv = document.createElement("div");
+    questionDiv.className = "mb-4";
+    questionDiv.innerHTML = `
+            <p class="text-gray-600 mb-2">${qIndex + 1}. ${q.text}</p>
+            <textarea id="activityInput_${
+              q.id
+            }" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 h-24 resize-y" placeholder="여기에 당신의 생각을 적어보세요..."></textarea>
+        `;
+    activityQuestionsContainer.appendChild(questionDiv);
+
+    // 저장된 내용 불러오기
+    const currentInput = document.getElementById(`activityInput_${q.id}`);
+    if (currentInput) {
+      currentInput.value = savedInputs[q.id] || "";
+    }
+  });
+
+  // 실천해보기 섹션 동적 생성
+  activityActionsList.innerHTML = ""; // 기존 내용 초기화
+  sheetData.actions.forEach((action) => {
+    const li = document.createElement("li");
+    li.className = "text-gray-600";
+    li.textContent = action;
+    activityActionsList.appendChild(li);
+  });
+
+  // '내용 저장하기' 버튼 클릭 이벤트
+  // 이벤트 리스너가 중복 등록되지 않도록 기존 리스너 제거 후 추가
+  saveActivitySheetButton.onclick = null; // 기존 이벤트 리스너 제거
+  saveActivitySheetButton.onclick = () => {
+    const currentInputs = {};
+    sheetData.questions.forEach((q) => {
+      const inputElement = document.getElementById(`activityInput_${q.id}`);
+      if (inputElement) {
+        currentInputs[q.id] = inputElement.value;
+      }
+    });
+    localStorage.setItem(
+      `activitySheet_chapter_${index}_inputs`,
+      JSON.stringify(currentInputs)
+    );
+
+    saveMessage.classList.remove("hidden");
+    setTimeout(() => {
+      saveMessage.classList.add("hidden");
+    }, 2000); // 2초 후 메시지 숨기기
+  };
 }
 
 // 차트 초기화 및 업데이트 함수들
