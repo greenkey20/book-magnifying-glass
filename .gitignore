@@ -1,0 +1,38 @@
+# macOS 관련 파일
+.DS_Store
+
+# Node.js 및 패키지 관리자 관련
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# 빌드 및 배포 관련 (향후 빌드 도구 사용 시)
+/dist/
+/build/
+/out/
+.parcel-cache/
+
+# IDE 및 에디터 관련
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# 로그 및 임시 파일
+*.log
+*.tmp
+*.bak
+*.swp
+
+# 환경 설정 파일 (민감 정보 포함 가능성)
+.env
+.env.local
+.env.*.local
+
+# 이미지 캐시 (만약 로컬에서 이미지 처리 툴 사용 시)
+.cache/
+
+# 기타
+Thumbs.db
